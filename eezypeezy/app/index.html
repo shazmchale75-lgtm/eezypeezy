@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>EezyPeezy 🫛</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pea: #4CAF6F;
+    --pea-light: #7DD49A;
+    --pea-dark: #2E7D4F;
+    --pea-pale: #EBF7EF;
+    --pea-mid: #C8EDD5;
+    --ink: #1A1F1C;
+    --ink-mid: #3D4840;
+    --muted: #8A9E90;
+    --white: #FAFCFB;
+    --off: #F2F7F4;
+    --rule: #DDE8E1;
+    --amber: #F5A623;
+    --amber-pale: #FEF6E7;
+    --purple: #7C6FCF;
+    --purple-pale: #F0EEF9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--off);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ── MOBILE MEDIA QUERIES ── */
+  @media (max-width: 480px) {
+    .app { box-shadow: none; }
+    .snap-zone { padding: 20px 16px; }
+    .results-header { padding: 16px; }
+    .tier-tabs { padding: 0 12px; gap: 6px; }
+    .tier-tab { padding: 10px 8px; font-size: 0.75rem; }
+    .recipe-panel { padding: 0 12px 16px; }
+    .recipe-card-header { padding: 14px 16px; }
+    .recipe-body { padding: 16px; }
+    .btn-snap { min-height: 56px; font-size: 1rem; }
+    .loading-inner { padding: 40px 20px; }
+  }
+
+  /* ── APP SHELL ── */
+  .app {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 0 60px rgba(0,0,0,0.08);
+  }
+
+  /* ── HEADER ── */
+  .app-header {
+    background: var(--white);
+    padding: 20px 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .app-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .app-logo span { color: var(--pea); }
+
+  .logo-pod {
+    width: 36px; height: 36px;
+    background: var(--pea);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(76,175,111,0.3);
+  }
+
+  .header-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--pea-dark);
+    background: var(--pea-pale);
+    border: 1px solid var(--pea-mid);
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── SCREENS ── */
+  .screen {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    padding: 24px;
+    animation: fadeIn 0.35s ease;
+  }
+
+  .screen.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SNAP SCREEN ── */
+  .snap-hero {
+    text-align: center;
+    padding: 8px 0 24px;
+  }
+
+  .snap-hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .snap-hero h1 em {
+    font-style: italic;
+    color: var(--pea-dark);
+  }
+
+  .snap-hero p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  /* UPLOAD ZONE */
+  .upload-zone {
+    border: 2px dashed var(--pea-mid);
+    border-radius: 20px;
+    background: var(--pea-pale);
+    padding: 36px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .upload-zone:hover, .upload-zone.dragover {
+    border-color: var(--pea);
+    background: #dff2e7;
+  }
+
+  .upload-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .upload-icon { font-size: 3rem; margin-bottom: 12px; display: block; }
+
+  .upload-zone h3 {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .upload-zone p {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* IMAGE PREVIEW */
+  .image-preview {
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .image-preview img {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .image-preview .change-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(26,31,28,0.75);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+  }
+
+  /* DETECTED INGREDIENTS */
+  .detected-bar {
+    background: var(--ink);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .detected-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--pea-light);
+    margin-bottom: 8px;
+  }
+
+  .detected-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .detected-chip {
+    background: rgba(76,175,111,0.15);
+    border: 1px solid rgba(76,175,111,0.3);
+    color: var(--pea-light);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  /* BUDGET INPUT */
+  .budget-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: stretch;
+  }
+
+  .budget-field {
+    flex: 1;
+    background: var(--off);
+    border: 1.5px solid var(--rule);
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .budget-field label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .budget-field input, .budget-field select {
+    background: none;
+    border: none;
+    outline: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    width: 100%;
+  }
+
+  .budget-field select { cursor: pointer; }
+
+  /* CTA BUTTON */
+  .btn-snap {
+    width: 100%;
+    background: var(--pea);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.05rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 8px 24px rgba(76,175,111,0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-snap:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(76,175,111,0.45);
+  }
+
+  .btn-snap:disabled {
+    background: var(--rule);
+    color: var(--muted);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  /* ── LOADING SCREEN ── */
+  .loading-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 40px;
+    text-align: center;
+  }
+
+  .pea-spinner {
+    font-size: 3.5rem;
+    animation: spin 1.8s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    0%   { transform: rotate(0deg) scale(1); }
+    50%  { transform: rotate(180deg) scale(1.15); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  .loading-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .loading-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .loading-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .loading-step.visible { opacity: 1; }
+  .loading-step.done { color: var(--pea-dark); }
+
+  .step-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--rule);
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+
+  .loading-step.visible .step-dot { background: var(--amber); }
+  .loading-step.done .step-dot { background: var(--pea); }
+
+  /* ── RESULTS SCREEN ── */
+  .results-header {
+    margin-bottom: 20px;
+  }
+
+  .results-back {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    padding: 0;
+    margin-bottom: 12px;
+  }
+
+  .results-back:hover { color: var(--ink); }
+
+  .results-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .results-subtitle {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* TIER TABS */
+  .tier-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .tier-tab {
+    padding: 10px 8px;
+    border-radius: 12px;
+    border: 1.5px solid var(--rule);
+    background: var(--white);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .tier-tab:hover { border-color: var(--pea-mid); background: var(--pea-pale); }
+
+  .tier-tab.active {
+    border-color: var(--pea);
+    background: var(--pea-pale);
+  }
+
+  .tier-tab-icon { font-size: 1.2rem; display: block; margin-bottom: 3px; }
+
+  .tier-tab-name {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--ink);
+    display: block;
+    line-height: 1.2;
+  }
+
+  .tier-tab-sub {
+    font-size: 0.62rem;
+    color: var(--muted);
+    display: block;
+    margin-top: 1px;
+  }
+
+  .tier-tab.active .tier-tab-name { color: var(--pea-dark); }
+
+  /* RECIPE CARDS */
+  .recipe-panel { display: none; }
+  .recipe-panel.active { display: block; animation: fadeIn 0.3s ease; }
+
+  .recipe-card {
+    border: 1.5px solid var(--rule);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: var(--white);
+    transition: box-shadow 0.2s;
+  }
+
+  .recipe-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.06); }
+
+  .recipe-card-header {
+    padding: 18px 20px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .recipe-card-left { flex: 1; }
+
+  .recipe-tier-badge {
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+
+  .badge-bare    { background: var(--pea-pale);   color: var(--pea-dark); }
+  .badge-store   { background: var(--amber-pale);  color: #8B5E0A; }
+  .badge-levelup { background: var(--purple-pale); color: #4A3F8F; }
+
+  .recipe-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .recipe-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .recipe-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .recipe-chevron {
+    font-size: 1rem;
+    color: var(--muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .recipe-card.open .recipe-chevron { transform: rotate(180deg); }
+
+  .recipe-body {
+    display: none;
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .recipe-card.open .recipe-body { display: block; }
+
+  .recipe-section-title {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 16px 0 8px;
+  }
+
+  .ingredients-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ingredients-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--ink-mid);
+  }
+
+  .ing-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--pea);
+    flex-shrink: 0;
+  }
+
+  .ing-dot.extra { background: var(--amber); }
+  .ing-dot.levelup { background: var(--purple); }
+
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .step-item {
+    display: flex;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: var(--ink-mid);
+    line-height: 1.5;
+  }
+
+  .step-number {
+    width: 22px; height: 22px;
+    background: var(--pea);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .tip-box {
+    background: var(--amber-pale);
+    border: 1px solid #f0dfc0;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-top: 14px;
+    font-size: 0.82rem;
+    color: #8B5E0A;
+    display: flex;
+    gap: 8px;
+    line-height: 1.5;
+  }
+
+  /* STAPLES NOTE */
+  .staples-note {
+    background: var(--off);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+    line-height: 1.5;
+  }
+
+  /* ERROR */
+  .error-box {
+    background: #FFF5F5;
+    border: 1.5px solid #FFCDD2;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .error-box h3 { font-size: 1rem; color: #C62828; margin-bottom: 6px; font-family: 'Fraunces', serif; }
+  .error-box p  { font-size: 0.82rem; color: #EF5350; line-height: 1.5; }
+
+  /* SHARE ROW */
+  .share-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .btn-share {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1.5px solid var(--rule);
+    background: var(--white);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .btn-share:hover { background: var(--off); }
+
+  .btn-new {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: var(--pea);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  /* FOOTER */
+  .app-footer {
+    padding: 16px 24px;
+    text-align: center;
+    font-size: 0.68rem;
+    color: var(--muted);
+    border-top: 1px solid var(--rule);
+  }
+
+  .app-footer span { color: var(--pea); }
+</style>
+<script>
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="app-header">
+    <div class="app-logo">
+      <div class="logo-pod">🫛</div>
+      Easy<span>Peesy</span>
+    </div>
+    <div class="header-tag">Free · No sign-up</div>
+  </div>
+
+  <!-- ══ SCREEN 1: SNAP ══ -->
+  <div class="screen active" id="screen-snap">
+
+    <div class="snap-hero">
+      <h1>Snap your items.<br><em>Eat well tonight.</em></h1>
+      <p>Lay what you have on the counter, take one photo, and get 3 recipes in seconds.</p>
+    </div>
+
+    <!-- UPLOAD / PREVIEW -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*" capture="environment">
+      <span class="upload-icon">📸</span>
+      <h3>Tap to snap or upload</h3>
+      <p>Photo of your items on the counter</p>
+    </div>
+
+    <div class="image-preview" id="imagePreview">
+      <img id="previewImg" src="" alt="Your items">
+      <button class="change-btn" onclick="resetImage()">Change photo</button>
+    </div>
+
+    <div class="detected-bar" id="detectedBar">
+      <div class="detected-label">📸 Photo ready</div>
+      <div class="detected-chips" id="detectedChips"></div>
+    </div>
+
+    <!-- BUDGET & SERVINGS -->
+    <div class="budget-row">
+      <div class="budget-field">
+        <label>Weekly budget</label>
+        <input type="text" id="budgetInput" placeholder="e.g. €20 or £20" value="">
+      </div>
+      <div class="budget-field">
+        <label>Cooking for</label>
+        <select id="servingsInput">
+          <option value="1">Just me</option>
+          <option value="2" selected>2 people</option>
+          <option value="3">3 people</option>
+          <option value="4">Family of 4</option>
+          <option value="5">5+ people</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn-snap" id="snapBtn" disabled onclick="getRecipes()">
+      🫛 Get My 3 Recipes
+    </button>
+
+  </div>
+
+  <!-- ══ SCREEN 2: LOADING ══ -->
+  <div class="screen" id="screen-loading">
+    <div class="loading-screen">
+      <div class="pea-spinner">🫛</div>
+      <div class="loading-title">Finding your dinner...</div>
+      <div class="loading-steps" id="loadingSteps">
+        <div class="loading-step" id="ls1">
+          <div class="step-dot"></div>
+          <span>Looking at what you've got</span>
+        </div>
+        <div class="loading-step" id="ls2">
+          <div class="step-dot"></div>
+          <span>Finding what's possible</span>
+        </div>
+        <div class="loading-step" id="ls3">
+          <div class="step-dot"></div>
+          <span>Building your 3 recipe options</span>
+        </div>
+        <div class="loading-step" id="ls4">
+          <div class="step-dot"></div>
+          <span>Nearly there...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 3: RESULTS ══ -->
+  <div class="screen" id="screen-results">
+
+    <div class="results-header">
+      <button class="results-back" onclick="showScreen('snap')">← Start over</button>
+      <div class="results-title">Here's your dinner 🫛</div>
+      <div class="results-subtitle" id="resultsSubtitle">3 options from what you've got</div>
+    </div>
+
+    <!-- TIER TABS -->
+    <div class="tier-tabs">
+      <div class="tier-tab active" onclick="showTier('bare', this)">
+        <span class="tier-tab-icon">🫛</span>
+        <span class="tier-tab-name">Just This</span>
+        <span class="tier-tab-sub">What you have</span>
+      </div>
+      <div class="tier-tab" onclick="showTier('store', this)">
+        <span class="tier-tab-icon">🧂</span>
+        <span class="tier-tab-name">A Little More</span>
+        <span class="tier-tab-sub">Common staples</span>
+      </div>
+      <div class="tier-tab" onclick="showTier('level', this)">
+        <span class="tier-tab-icon">✨</span>
+        <span class="tier-tab-name">Let's Go</span>
+        <span class="tier-tab-sub">Level it up</span>
+      </div>
+    </div>
+
+    <!-- TIER 1: BARE BONES -->
+    <div class="recipe-panel active" id="panel-bare">
+      <div class="staples-note">
+        <span>🫛</span>
+        <span><strong>Just what you've got</strong> — these recipes use only what you have plus absolute basics: salt, pepper, and oil.</span>
+      </div>
+      <div id="recipes-bare"></div>
+    </div>
+
+    <!-- TIER 2: STORECUPBOARD -->
+    <div class="recipe-panel" id="panel-store">
+      <div class="staples-note" style="background:var(--amber-pale); border-color:#f0dfc0;">
+        <span>🧂</span>
+        <span><strong>Common staples most people have</strong> — your items plus things like an onion, garlic, a tin of tomatoes, stock cube, dried pasta.</span>
+      </div>
+      <div id="recipes-store"></div>
+    </div>
+
+    <!-- TIER 3: LEVEL UP -->
+    <div class="recipe-panel" id="panel-level">
+      <div class="staples-note" style="background:var(--purple-pale); border-color:#d8d3f0;">
+        <span>✨</span>
+        <span><strong>Worth picking up</strong> — adds one or two items that elevate the meal. Simple, affordable, opens up a whole new set of options.</span>
+      </div>
+      <div id="recipes-level"></div>
+    </div>
+
+    <!-- ERROR -->
+    <div class="error-box" id="errorBox" style="display:none;">
+      <h3>Something went wrong</h3>
+      <p id="errorMsg">We couldn't generate recipes. Please try again.</p>
+    </div>
+
+    <!-- SHARE / NEW -->
+    <div class="share-row">
+      <button class="btn-share" onclick="copyRecipes()">📋 Copy recipes</button>
+      <button class="btn-new" onclick="showScreen('snap')">📸 New snap</button>
+    </div>
+
+  </div>
+
+  <div class="app-footer">
+    Made with <span>🫛</span> — EezyPeezy 2026
+  </div>
+
+</div>
+
+<script>
+  let currentImageBase64 = null;
+  let currentImageType = null;
+  let allRecipesText = '';
+
+  // ── FILE INPUT ──
+  document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const result = ev.target.result;
+      currentImageBase64 = result.split(',')[1];
+      currentImageType = file.type || 'image/jpeg';
+      document.getElementById('previewImg').src = result;
+      document.getElementById('imagePreview').style.display = 'block';
+      document.getElementById('uploadZone').style.display = 'none';
+      document.getElementById('detectedBar').style.display = 'block';
+      document.getElementById('detectedChips').innerHTML = '<div style="font-size:0.78rem;color:var(--pea-light);">Photo loaded — ready to analyse 🫛</div>';
+      document.getElementById('snapBtn').disabled = false;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  function resetImage() {
+    currentImageBase64 = null;
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('uploadZone').style.display = 'block';
+    document.getElementById('detectedBar').style.display = 'none';
+    document.getElementById('snapBtn').disabled = true;
+    document.getElementById('fileInput').value = '';
+  }
+
+  // ── SCREEN MANAGER ──
+  function showScreen(name) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + name).classList.add('active');
+  }
+
+  // ── TIER TABS ──
+  function showTier(tier, tabEl) {
+    document.querySelectorAll('.tier-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.recipe-panel').forEach(p => p.classList.remove('active'));
+    tabEl.classList.add('active');
+    document.getElementById('panel-' + tier).classList.add('active');
+  }
+
+  // ── RECIPE CARD TOGGLE ──
+  function toggleRecipe(card) {
+    card.classList.toggle('open');
+  }
+
+  // ── LOADING ANIMATION ──
+  function animateLoading() {
+    const steps = ['ls1','ls2','ls3','ls4'];
+    steps.forEach((id, i) => {
+      setTimeout(() => {
+        document.getElementById(id).classList.add('visible');
+      }, i * 900);
+      setTimeout(() => {
+        document.getElementById(id).classList.add('done');
+      }, i * 900 + 600);
+    });
+  }
+
+  // ── MAIN: GET RECIPES ──
+  async function getRecipes() {
+    if (!currentImageBase64) return;
+
+    const budget = document.getElementById('budgetInput').value || 'a tight budget';
+    const servings = document.getElementById('servingsInput').value;
+    const servingsLabel = document.getElementById('servingsInput').options[document.getElementById('servingsInput').selectedIndex].text;
+
+    showScreen('loading');
+
+    // Reset loading steps
+    ['ls1','ls2','ls3','ls4'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('visible', 'done');
+    });
+    animateLoading();
+
+    // Reset results and tier tabs to first tab
+    document.getElementById('recipes-bare').innerHTML = '';
+    document.getElementById('recipes-store').innerHTML = '';
+    document.getElementById('recipes-level').innerHTML = '';
+    document.getElementById('errorBox').style.display = 'none';
+    document.querySelectorAll('.tier-tab').forEach((t,i) => {
+      t.classList.toggle('active', i === 0);
+    });
+    document.querySelectorAll('.recipe-panel').forEach((p,i) => {
+      p.classList.toggle('active', i === 0);
+    });
+
+    const systemPrompt = `You are EezyPeezy, a friendly and practical cooking assistant for people on a budget — students, busy parents, anyone staring at their kitchen at 6pm wondering what to make.
+
+The user has sent a photo of their ingredients. You will generate exactly THREE tiers of recipes, one per tier. Each tier gives ONE recipe. Keep every recipe simple, achievable, and genuinely nourishing. No fancy techniques. No obscure ingredients. Write like a helpful friend, not a cookbook.
+
+Budget context: ${budget}. Cooking for: ${servingsLabel} (${servings} people).
+
+Return your response as valid JSON only — no preamble, no markdown, no backticks. Use this exact structure:
+
+{
+  "identified_ingredients": ["ingredient1", "ingredient2"],
+  "tier1": {
+    "name": "Recipe name",
+    "time": "X mins",
+    "cost": "£X per serving",
+    "badge": "Just what you've got",
+    "ingredients": [
+      {"item": "ingredient", "type": "yours"},
+      {"item": "salt", "type": "basic"}
+    ],
+    "steps": ["Step 1 instruction", "Step 2 instruction", "Step 3 instruction", "Step 4 instruction"],
+    "tip": "One practical money-saving or flavour tip"
+  },
+  "tier2": {
+    "name": "Recipe name",
+    "time": "X mins",
+    "cost": "£X per serving",
+    "badge": "A little more",
+    "ingredients": [
+      {"item": "ingredient", "type": "yours"},
+      {"item": "onion", "type": "staple"}
+    ],
+    "steps": ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5"],
+    "tip": "One practical tip",
+    "staples_needed": ["onion", "garlic"]
+  },
+  "tier3": {
+    "name": "Recipe name",
+    "time": "X mins",
+    "cost": "£X per serving",
+    "badge": "Level it up",
+    "ingredients": [
+      {"item": "ingredient", "type": "yours"},
+      {"item": "coconut milk", "type": "levelup"}
+    ],
+    "steps": ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5"],
+    "tip": "One practical tip",
+    "levelup_items": ["coconut milk", "lime"],
+    "why_worth_it": "Brief sentence on why this elevates the dish"
+  }
+}
+
+Rules:
+- Tier 1: ONLY uses ingredients visible in the photo plus absolute basics (salt, pepper, oil, water). Nothing else.
+- Tier 2: Photo ingredients plus things virtually everyone has at home — onion, garlic, tinned tomatoes, dried pasta, stock cube, soy sauce, eggs, butter, basic spices.
+- Tier 3: Everything in Tier 2 plus 1-2 affordable items that genuinely elevate the dish (coconut milk, lemon, cheese, chilli flakes, cream, fresh herbs etc.)
+- All recipes must serve ${servings} people
+- Keep steps short and clear — maximum 5 steps per recipe
+- Be honest about cost — don't underestimate
+- If you can't clearly identify ingredients, make reasonable assumptions and note them`;
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 4000,
+          system: systemPrompt,
+          messages: [{
+            role: 'user',
+            content: [{
+              type: 'image',
+              source: {
+                type: 'base64',
+                media_type: currentImageType,
+                data: currentImageBase64
+              }
+            }, {
+              type: 'text',
+              text: 'Here are my ingredients. Please give me my three recipe tiers.'
+            }]
+          }]
+        })
+      });
+
+      const data = await response.json();
+
+      // Check for API-level errors
+      if (data.error) {
+        throw new Error('AI service error: ' + (data.error.message || 'Please try again.'));
+      }
+
+      if (!data.content || data.content.length === 0) {
+        throw new Error('No response received. Please check your connection and try again.');
+      }
+
+      const rawText = data.content.map(b => b.text || '').join('');
+
+      if (!rawText) {
+        throw new Error('Empty response received. Please try again.');
+      }
+
+      // Parse JSON — strip markdown fences if present
+      let recipes;
+      try {
+        const clean = rawText.replace(/```json|```/g, '').trim();
+        // Find JSON object in response even if there's surrounding text
+        const jsonMatch = clean.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) throw new Error('No recipe data found.');
+        recipes = JSON.parse(jsonMatch[0]);
+      } catch(e) {
+        throw new Error('Could not read recipes. Please try again with a clearer photo.');
+      }
+
+      // Validate we got the tiers we need
+      if (!recipes.tier1 && !recipes.tier2 && !recipes.tier3) {
+        throw new Error('No recipes were generated. Please try a clearer photo with visible items.');
+      }
+
+      // Show detected ingredients
+      if (recipes.identified_ingredients?.length) {
+        const chips = recipes.identified_ingredients.map(i =>
+          `<div class="detected-chip">${i}</div>`
+        ).join('');
+        document.getElementById('detectedChips').innerHTML = chips;
+      }
+
+      // Update subtitle
+      document.getElementById('resultsSubtitle').textContent =
+        `${recipes.identified_ingredients?.length || 'Several'} items spotted · 3 options ready`;
+
+      // Render all tiers
+      renderTier('bare',  recipes.tier1, 'badge-bare',    '#4CAF6F');
+      renderTier('store', recipes.tier2, 'badge-store',   '#F5A623');
+      renderTier('level', recipes.tier3, 'badge-levelup', '#7C6FCF');
+
+      // Store for copy
+      allRecipesText = formatRecipesForCopy(recipes);
+
+      showScreen('results');
+
+    } catch(err) {
+      document.getElementById('errorBox').style.display = 'block';
+      document.getElementById('errorMsg').textContent = err.message || 'Something went wrong. Please try again.';
+      showScreen('results');
+    }
+  }
+
+  // ── RENDER A TIER ──
+  function renderTier(tierId, recipe, badgeClass, accentColor) {
+    const container = document.getElementById('recipes-' + tierId);
+    if (!recipe) { container.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;padding:12px 0;">No recipe generated for this tier.</p>'; return; }
+
+    const ingDotType = tierId === 'bare' ? 'ing-dot' : tierId === 'store' ? 'ing-dot extra' : 'ing-dot levelup';
+
+    const ingredients = (recipe.ingredients || []).map(ing => {
+      const dotClass = ing.type === 'yours' ? 'ing-dot' : ing.type === 'basic' ? 'ing-dot' : ing.type === 'staple' ? 'ing-dot extra' : 'ing-dot levelup';
+      return `<li><span class="${dotClass}"></span>${ing.item}</li>`;
+    }).join('');
+
+    const steps = (recipe.steps || []).map((step, i) =>
+      `<li class="step-item"><span class="step-number" style="background:${accentColor}">${i+1}</span><span>${step}</span></li>`
+    ).join('');
+
+    const extraInfo = tierId === 'store' && recipe.staples_needed?.length
+      ? `<div class="tip-box">🛒 <span><strong>Staples used:</strong> ${recipe.staples_needed.join(', ')}</span></div>`
+      : tierId === 'level' && recipe.levelup_items?.length
+      ? `<div class="tip-box" style="background:var(--purple-pale);border-color:#d8d3f0;color:#4A3F8F;">✨ <span><strong>Pick up:</strong> ${recipe.levelup_items.join(', ')}${recipe.why_worth_it ? ' — ' + recipe.why_worth_it : ''}</span></div>`
+      : '';
+
+    container.innerHTML = `
+      <div class="recipe-card" onclick="toggleRecipe(this)">
+        <div class="recipe-card-header">
+          <div class="recipe-card-left">
+            <span class="recipe-tier-badge ${badgeClass}">${recipe.badge || ''}</span>
+            <div class="recipe-name">${recipe.name || 'Recipe'}</div>
+            <div class="recipe-meta">
+              <span class="recipe-meta-item">⏱ ${recipe.time || '—'}</span>
+              <span class="recipe-meta-item">💰 ${recipe.cost || '—'}</span>
+            </div>
+          </div>
+          <span class="recipe-chevron">▼</span>
+        </div>
+        <div class="recipe-body">
+          <div class="recipe-section-title">What you need</div>
+          <ul class="ingredients-list">${ingredients}</ul>
+          <div class="recipe-section-title">How to make it</div>
+          <ul class="steps-list">${steps}</ul>
+          ${recipe.tip ? `<div class="tip-box">💡 <span>${recipe.tip}</span></div>` : ''}
+          ${extraInfo}
+        </div>
+      </div>`;
+  }
+
+  // ── COPY RECIPES ──
+  function formatRecipesForCopy(recipes) {
+    let text = 'EezyPeezy 🫛 — My Recipes Tonight\n\n';
+    [recipes.tier1, recipes.tier2, recipes.tier3].forEach((r, i) => {
+      if (!r) return;
+      const labels = ['Just This', 'A Little More', "Let's Go"];
+      text += `── ${labels[i]}: ${r.name} ──\n`;
+      text += `Time: ${r.time} · Cost: ${r.cost}\n\n`;
+      text += 'Ingredients:\n' + (r.ingredients||[]).map(i => `• ${i.item}`).join('\n') + '\n\n';
+      text += 'Steps:\n' + (r.steps||[]).map((s,i) => `${i+1}. ${s}`).join('\n') + '\n\n';
+    });
+    text += 'Generated by EezyPeezy — eezypeezy.app';
+    return text;
+  }
+
+  async function copyRecipes() {
+    try {
+      await navigator.clipboard.writeText(allRecipesText);
+      const btn = document.querySelector('.btn-share');
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.innerHTML = '📋 Copy recipes'; }, 2000);
+    } catch(e) {
+      alert(allRecipesText);
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EezyPeezy 🫛 — Snap your items. Eat well tonight.</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pea:        #3FAF6A;
+    --pea-light:  #6DD49A;
+    --pea-dark:   #1E6E3F;
+    --pea-pale:   #D6F2E2;
+    --pea-mid:    #A8DFC0;
+    --ink:        #1A2E22;
+    --ink-soft:   #2E4838;
+    --muted:      #5A8068;
+    --white:      #E8F7EE;
+    --off:        #D6F2E2;
+    --rule:       #B8E8CC;
+    --amber:      #F0A020;
+    --amber-pale: #FEF5E4;
+    --warm:       #DFF5E9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    padding: 0 48px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(216,242,226,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(213,229,218,0.6);
+  }
+
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo-pod {
+    width: 34px; height: 34px;
+    background: var(--pea);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    box-shadow: 0 4px 12px rgba(63,175,106,0.35);
+  }
+
+  .nav-logo span { color: var(--pea); }
+
+  .nav-cta {
+    background: var(--pea);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 22px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 16px rgba(63,175,106,0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(63,175,106,0.4);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    padding: 120px 48px 80px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Gradient mesh background */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(63,175,106,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 80%, rgba(63,175,106,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(240,160,32,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Subtle grid lines */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(63,175,106,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(63,175,106,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HERO LEFT */
+  .hero-left { display: flex; flex-direction: column; gap: 0; }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--pea-pale);
+    border: 1px solid var(--pea-mid);
+    color: var(--pea-dark);
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-bottom: 28px;
+    width: fit-content;
+    animation: slideIn 0.6s ease both;
+  }
+
+  .eyebrow-dot {
+    width: 6px; height: 6px;
+    background: var(--pea);
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.6rem, 4.5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 24px;
+    animation: slideIn 0.6s 0.1s ease both;
+  }
+
+  .hero-h1 em {
+    font-style: italic;
+    color: var(--pea);
+    position: relative;
+  }
+
+  /* Underline squiggle on the key phrase */
+  .hero-h1 em::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 3px;
+    background: var(--pea);
+    border-radius: 2px;
+    opacity: 0.4;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 460px;
+    margin-bottom: 36px;
+    font-weight: 400;
+    animation: slideIn 0.6s 0.2s ease both;
+  }
+
+  .hero-sub strong { color: var(--ink); font-weight: 700; }
+
+  /* CTA BLOCK */
+  .hero-cta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: slideIn 0.6s 0.3s ease both;
+  }
+
+  .btn-primary-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--pea);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 18px 32px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.05rem;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(63,175,106,0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+    width: fit-content;
+  }
+
+  .btn-primary-hero:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(63,175,106,0.45);
+  }
+
+  .hero-reassurance {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .reassurance-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .reassurance-item::before {
+    content: '✓';
+    color: var(--pea);
+    font-weight: 900;
+  }
+
+  /* HERO RIGHT — PHONE */
+  .hero-right {
+    display: flex;
+    justify-content: center;
+    animation: slideIn 0.7s 0.2s ease both;
+  }
+
+  .phone-wrap {
+    position: relative;
+  }
+
+  /* Glow behind phone */
+  .phone-wrap::before {
+    content: '';
+    position: absolute;
+    top: 10%; left: 10%; right: 10%; bottom: 10%;
+    background: radial-gradient(ellipse, rgba(63,175,106,0.2) 0%, transparent 70%);
+    filter: blur(30px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .phone {
+    width: 300px;
+    background: var(--ink);
+    border-radius: 44px;
+    padding: 16px;
+    box-shadow:
+      0 40px 80px rgba(0,0,0,0.35),
+      0 0 0 1px rgba(255,255,255,0.06) inset;
+    position: relative;
+    z-index: 1;
+    animation: phoneFloat 4s ease-in-out infinite;
+  }
+
+  @keyframes phoneFloat {
+    0%, 100% { transform: translateY(0px) rotate(-1deg); }
+    50% { transform: translateY(-14px) rotate(1deg); }
+  }
+
+  .phone-inner {
+    background: #FFFFFF;
+    border-radius: 32px;
+    overflow: hidden;
+  }
+
+  .phone-status {
+    background: var(--ink);
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phone-pill {
+    width: 80px; height: 8px;
+    background: #2a3530;
+    border-radius: 4px;
+  }
+
+  .phone-screen {
+    padding: 16px;
+    background: var(--white);
+  }
+
+  .phone-header-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .phone-icon {
+    width: 30px; height: 30px;
+    background: var(--pea);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    box-shadow: 0 3px 8px rgba(63,175,106,0.3);
+  }
+
+  .phone-app-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--ink);
+  }
+
+  .phone-app-title span { color: var(--pea); }
+
+  /* INGREDIENT SNAP */
+  .phone-snap {
+    background: var(--pea-pale);
+    border: 2px dashed var(--pea-mid);
+    border-radius: 14px;
+    padding: 20px 12px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .phone-snap-big { font-size: 2.2rem; display: block; margin-bottom: 6px; }
+
+  .phone-snap-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--pea-dark);
+    display: block;
+  }
+
+  .phone-snap-sub {
+    font-size: 0.62rem;
+    color: var(--muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .phone-btn {
+    background: var(--pea);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+  }
+
+  .phone-results {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .phone-result-row {
+    background: var(--off);
+    border-radius: 10px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .phone-result-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .phone-result-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .phone-result-name { font-size: 0.7rem; font-weight: 700; color: var(--ink); }
+  .phone-result-time { font-size: 0.62rem; color: var(--muted); font-weight: 600; }
+
+  /* Floating chips around phone */
+  .float-chip {
+    position: absolute;
+    background: white;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  .chip-1 {
+    top: 12%;
+    right: -80px;
+    color: var(--pea-dark);
+    border: 1px solid var(--pea-mid);
+    animation: chipFloat1 3.5s ease-in-out infinite;
+  }
+
+  .chip-2 {
+    bottom: 28%;
+    left: -90px;
+    color: #8B5E0A;
+    border: 1px solid #f0dfc0;
+    animation: chipFloat2 4s ease-in-out infinite;
+  }
+
+  .chip-3 {
+    bottom: 10%;
+    right: -70px;
+    color: #4A3F8F;
+    border: 1px solid #d8d3f0;
+    animation: chipFloat1 3s 0.5s ease-in-out infinite;
+  }
+
+  @keyframes chipFloat1 {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes chipFloat2 {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(8px); }
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SOCIAL PROOF STRIP ── */
+  .proof-strip {
+    background: var(--pea-dark);
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .proof-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+  }
+
+  .proof-item strong { color: white; font-weight: 800; }
+
+  /* ── THE MOMENT SECTION ── */
+  .moment-section {
+    padding: 100px 48px;
+    background: var(--warm);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .moment-section::before {
+    content: '6PM';
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Fraunces', serif;
+    font-size: 18rem;
+    font-weight: 900;
+    color: rgba(63,175,106,0.05);
+    line-height: 1;
+    pointer-events: none;
+    letter-spacing: -0.05em;
+  }
+
+  .moment-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .moment-left {}
+
+  .section-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pea-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 24px; height: 2px;
+    background: var(--pea);
+    flex-shrink: 0;
+  }
+
+  .moment-h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  .moment-h2 em {
+    font-style: italic;
+    color: var(--pea);
+  }
+
+  .moment-body {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 440px;
+  }
+
+  .moment-body strong { color: var(--ink); font-weight: 700; }
+
+  /* MOMENTS LIST */
+  .moments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .moment-card {
+    background: #FFFFFF;
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 20px 22px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .moment-card:hover {
+    transform: translateX(6px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  }
+
+  .moment-emoji { font-size: 1.6rem; flex-shrink: 0; margin-top: 2px; }
+
+  .moment-card-text {}
+
+  .moment-card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .moment-card-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-section {
+    padding: 100px 48px;
+    background: #FFFFFF;
+  }
+
+  .how-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+
+  .how-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .how-h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+    margin-top: 12px;
+  }
+
+  .how-sub {
+    font-size: 0.95rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .step-card {
+    background: #FFFFFF;
+    padding: 40px 32px;
+    position: relative;
+  }
+
+  .step-number-big {
+    font-family: 'Fraunces', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--pea-pale);
+    line-height: 1;
+    margin-bottom: 16px;
+    letter-spacing: -0.04em;
+  }
+
+  .step-icon-wrap {
+    width: 52px; height: 52px;
+    background: var(--pea-pale);
+    border: 1px solid var(--pea-mid);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .step-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .step-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .step-desc strong { color: var(--ink); font-weight: 700; }
+
+  /* ── PHILOSOPHY SECTION ── */
+  .philosophy-section {
+    padding: 100px 48px;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .philosophy-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 50%, rgba(63,175,106,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 80% 50%, rgba(63,175,106,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .philosophy-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .philosophy-header {
+    text-align: center;
+    margin-bottom: 64px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .philosophy-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pea-light);
+    margin-bottom: 16px;
+  }
+
+  .philosophy-h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    color: #FFFFFF;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .philosophy-h2 em {
+    font-style: italic;
+    color: var(--pea);
+  }
+
+  .philosophy-intro {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.8;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .philosophy-intro strong { color: rgba(255,255,255,0.9); font-weight: 700; }
+
+  .dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 60px;
+  }
+
+  .dish-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 28px 22px;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .dish-card:hover {
+    transform: translateY(-4px);
+    background: rgba(63,175,106,0.1);
+    border-color: rgba(63,175,106,0.2);
+  }
+
+  .dish-flag { font-size: 1.8rem; margin-bottom: 12px; display: block; }
+
+  .dish-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+  }
+
+  .dish-country {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pea-light);
+    margin-bottom: 10px;
+  }
+
+  .dish-ingredients {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .dish-ingredients strong {
+    color: rgba(255,255,255,0.8);
+    font-style: normal;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .philosophy-quote {
+    text-align: center;
+    padding: 48px;
+    background: rgba(63,175,106,0.08);
+    border: 1px solid rgba(63,175,106,0.15);
+    border-radius: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .philosophy-quote blockquote {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-weight: 700;
+    font-style: italic;
+    color: #FFFFFF;
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+
+  .philosophy-quote blockquote em {
+    color: var(--pea);
+    font-style: normal;
+  }
+
+  .philosophy-quote cite {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  @media (max-width: 960px) {
+    .dishes-grid { grid-template-columns: repeat(2, 1fr); }
+    .philosophy-section { padding: 72px 24px; }
+    .philosophy-quote { padding: 32px 24px; }
+  }
+
+  /* ── THREE TIERS ── */
+
+  .tiers-section {
+    padding: 100px 48px;
+    background: #1E2D25;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tiers-section::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(63,175,106,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .tiers-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tiers-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .tiers-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pea-light);
+    margin-bottom: 12px;
+  }
+
+  .tiers-h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .tiers-sub {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .tier-card {
+    border-radius: 20px;
+    padding: 36px 28px;
+    border: 1px solid rgba(255,255,255,0.07);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .tier-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+  }
+
+  .tier-card-1 { background: #243d2c; }
+  .tier-card-2 { background: #3a2d16; }
+  .tier-card-3 { background: #272040; }
+
+  .tier-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .tier-card-1::before { background: var(--pea); }
+  .tier-card-2::before { background: var(--amber); }
+  .tier-card-3::before { background: #9C8FFF; }
+
+  .tier-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+
+  .tier-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .tier-tagline {
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .tier-card-1 .tier-tagline { color: var(--pea-light); }
+  .tier-card-2 .tier-tagline { color: #F5C878; }
+  .tier-card-3 .tier-tagline { color: #B8B0FF; }
+
+  .tier-desc {
+    font-size: 0.83rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .tier-card-2 .tier-desc,
+  .tier-card-3 .tier-desc { color: rgba(255,255,255,0.65); }
+
+  .tier-example {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section {
+    padding: 100px 48px;
+    background: var(--off);
+  }
+
+  .testimonials-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+
+  .testimonials-header {
+    text-align: center;
+    margin-bottom: 52px;
+  }
+
+  .testimonials-h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-top: 10px;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .testimonial-card {
+    background: #FFFFFF;
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    padding: 32px 28px;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+  }
+
+  .testimonial-quote {
+    font-family: 'Fraunces', serif;
+    font-size: 2.5rem;
+    color: var(--pea-mid);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .testimonial-text {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .testimonial-text strong { font-style: normal; color: var(--ink); font-weight: 800; }
+
+  .testimonial-person {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .testimonial-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--pea-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    border: 2px solid var(--pea-mid);
+    flex-shrink: 0;
+  }
+
+  .testimonial-name {
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: var(--ink);
+  }
+
+  .testimonial-role {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  /* ── FINAL CTA ── */
+  .final-cta {
+    padding: 100px 48px;
+    background: #FFFFFF;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: '🫛';
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28rem;
+    opacity: 0.03;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .final-cta-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .final-cta-h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    margin-top: 12px;
+  }
+
+  .final-cta-h2 em {
+    font-style: italic;
+    color: var(--pea);
+  }
+
+  .final-cta-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 40px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .final-cta-sub strong { color: var(--ink); font-weight: 700; }
+
+  .final-cta-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .final-reassurance {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 600;
+    flex-wrap: wrap;
+  }
+
+  .final-reassurance span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .final-reassurance span::before {
+    content: '✓';
+    color: var(--pea);
+    font-weight: 900;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-logo span { color: var(--pea); }
+
+  .footer-tagline {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: var(--pea-light); }
+
+  .footer-copy {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    nav { padding: 0 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    .hero-right { order: -1; }
+    .phone { width: 260px; }
+    .chip-1, .chip-2, .chip-3 { display: none; }
+    .proof-strip { padding: 20px 24px; gap: 24px; }
+    .moment-section,
+    .how-section,
+    .tiers-section,
+    .testimonials-section,
+    .final-cta { padding: 72px 24px; }
+    .moment-inner { grid-template-columns: 1fr; gap: 40px; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .tiers-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+    .footer-copy { text-align: left; }
+  }
+</style>
+<script>
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body id="top">
+
+<!-- NAV -->
+<nav>
+  <a href="#top" class="nav-logo">
+    <div class="nav-logo-pod">🫛</div>
+    Eezy<span>Peezy</span>
+  </a>
+  <a href="#try" class="nav-cta">📸 Try it free</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="eyebrow-dot"></div>
+        Free · No sign-up · Works right now
+      </div>
+
+      <h1 class="hero-h1">
+        You had more<br>
+        than you<br>
+        <em>thought.</em>
+      </h1>
+
+      <p class="hero-sub">
+        Stop thinking what you have isn't enough.
+        <strong>Snap a photo of what you've got</strong> — EezyPeezy finds the meal hiding in plain sight, in seconds.
+      </p>
+
+
+      <div class="hero-cta-block">
+        <a href="#try" class="btn-primary-hero">
+          📸 Snap my items now
+        </a>
+        <div class="hero-reassurance">
+          <span class="reassurance-item">Free forever</span>
+          <span class="reassurance-item">No account needed</span>
+          <span class="reassurance-item">Works on any phone</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="phone-wrap">
+
+        <div class="float-chip chip-1">🫛 Just this</div>
+        <div class="float-chip chip-2">🧂 A little more</div>
+        <div class="float-chip chip-3">✨ Let's go</div>
+
+        <div class="phone">
+          <div class="phone-inner">
+            <div class="phone-status"><div class="phone-pill"></div></div>
+            <div class="phone-screen">
+              <div class="phone-header-row">
+                <div class="phone-icon">🫛</div>
+                <div class="phone-app-title">Eezy<span>Peezy</span></div>
+              </div>
+              <div class="phone-snap">
+                <span class="phone-snap-big">📸</span>
+                <span class="phone-snap-label">Lay them on the counter</span>
+                <span class="phone-snap-sub">Snap · Send · Eat</span>
+              </div>
+              <button class="phone-btn">🫛 Get My Recipes</button>
+              <div class="phone-results">
+                <div class="phone-result-row">
+                  <div class="phone-result-left">
+                    <div class="phone-result-dot" style="background:var(--pea)"></div>
+                    <span class="phone-result-name">Pea & egg fried rice</span>
+                  </div>
+                  <span class="phone-result-time">12 min</span>
+                </div>
+                <div class="phone-result-row">
+                  <div class="phone-result-left">
+                    <div class="phone-result-dot" style="background:var(--amber)"></div>
+                    <span class="phone-result-name">Quick pea & pasta bake</span>
+                  </div>
+                  <span class="phone-result-time">18 min</span>
+                </div>
+                <div class="phone-result-row">
+                  <div class="phone-result-left">
+                    <div class="phone-result-dot" style="background:#9C8FFF"></div>
+                    <span class="phone-result-name">Pea & coconut curry</span>
+                  </div>
+                  <span class="phone-result-time">22 min</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-item"><strong>Zero</strong> sign-up required</div>
+  <div class="proof-item"><strong>3</strong> recipe tiers every time</div>
+  <div class="proof-item"><strong>Seconds</strong> from snap to dinner</div>
+  <div class="proof-item">Cheaper than <strong>any takeout</strong></div>
+  <div class="proof-item">Cuts <strong>food waste</strong> every week</div>
+</div>
+
+<!-- ══ THE MOMENT ══ -->
+<section class="moment-section" id="moment">
+  <div class="moment-inner">
+    <div class="moment-left">
+      <div class="section-eyebrow">You already know this feeling</div>
+      <h2 class="moment-h2">
+        It's 6pm.<br>
+        You have <em>more<br>
+        than you think.</em>
+      </h2>
+      <p class="moment-body">
+        There's always something there. A few items on the counter.
+        Something in the freezer. An onion rolling around somewhere.
+        <strong>It's not nothing — it's dinner.</strong> You just can't see it yet.<br><br>
+        For centuries, the greatest home cooks in the world fed families
+        beautifully from exactly this. EezyPeezy simply helps you
+        see what they always could.
+      </p>
+    </div>
+
+    <div class="moments-list">
+      <div class="moment-card">
+        <span class="moment-emoji">🎓</span>
+        <div class="moment-card-text">
+          <div class="moment-card-title">The student at end of term</div>
+          <div class="moment-card-desc">Half a bag of pasta, two eggs, something wilting. You'd rather order a pizza. EezyPeezy finds dinner in what you already have.</div>
+        </div>
+      </div>
+      <div class="moment-card">
+        <span class="moment-emoji">👨‍👩‍👧</span>
+        <div class="moment-card-text">
+          <div class="moment-card-title">The parent home late</div>
+          <div class="moment-card-desc">No time to shop. Kids are hungry. The freezer has peas, there's some chicken, there's always an onion. That's a meal.</div>
+        </div>
+      </div>
+      <div class="moment-card">
+        <span class="moment-emoji">💸</span>
+        <div class="moment-card-text">
+          <div class="moment-card-title">The week before payday</div>
+          <div class="moment-card-desc">Budget is tight and the takeout guilt is real. EezyPeezy stretches what's there into something proper — and tells you the cost per serving.</div>
+        </div>
+      </div>
+      <div class="moment-card">
+        <span class="moment-emoji">🌍</span>
+        <div class="moment-card-text">
+          <div class="moment-card-title">Everyone who hates food waste</div>
+          <div class="moment-card-desc">The average household throws away over £1,000 of food a year. Every snap you take is a small win against that.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="how-section" id="how">
+  <div class="how-inner">
+    <div class="how-header">
+      <div class="section-eyebrow" style="justify-content:center;">Three steps. That's it.</div>
+      <h2 class="how-h2">Simpler than ordering a takeout</h2>
+      <p class="how-sub">No jars. No kits. No shopping list. Just what you have and what you can make from it.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number-big">01</div>
+        <div class="step-icon-wrap">📸</div>
+        <div class="step-title">Lay & Snap</div>
+        <div class="step-desc">Grab whatever you have — freezer, cupboard, counter, anywhere. <strong>Lay it on the counter</strong> and take one photo. That's your input.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number-big">02</div>
+        <div class="step-icon-wrap">🤖</div>
+        <div class="step-title">AI Reads It</div>
+        <div class="step-desc">EezyPeezy reads what you have and <strong>finds 3 ways to make dinner</strong> — from bare bones to a proper elevated meal.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-number-big">03</div>
+        <div class="step-icon-wrap">🍽️</div>
+        <div class="step-title">Pick & Cook</div>
+        <div class="step-desc">Choose your tier. Follow the steps. <strong>Dinner is done</strong> — quicker than the delivery would have arrived.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PHILOSOPHY ══ -->
+<section class="philosophy-section" id="philosophy">
+  <div class="philosophy-inner">
+
+    <div class="philosophy-header">
+      <div class="philosophy-eyebrow">The oldest idea in cooking</div>
+      <h2 class="philosophy-h2">
+        Europe's greatest dishes<br>started with <em>almost nothing.</em>
+      </h2>
+      <p class="philosophy-intro">
+        Long before recipe apps, meal kits and supermarket sauces,
+        generations of home cooks across Europe fed their families beautifully
+        from a handful of simple things. <strong>They didn't think of it as
+        cooking with odds and ends. They just called it dinner.</strong>
+        The Italians even gave this wisdom a name — <em>cucina povera</em> —
+        "the kitchen of the poor." Today, these dishes are served in
+        Michelin-starred restaurants. Nothing has changed except what we
+        believe we're capable of.
+      </p>
+    </div>
+
+    <div class="dishes-grid">
+      <div class="dish-card">
+        <span class="dish-flag">🇮🇹</span>
+        <div class="dish-name">Spaghetti Aglio e Olio</div>
+        <div class="dish-country">Italy</div>
+        <div class="dish-ingredients">
+          <strong>Just</strong>
+          pasta, garlic, olive oil, chilli flakes. Nothing more. Beloved for centuries.
+        </div>
+      </div>
+      <div class="dish-card">
+        <span class="dish-flag">🇪🇸</span>
+        <div class="dish-name">Tortilla Española</div>
+        <div class="dish-country">Spain</div>
+        <div class="dish-ingredients">
+          <strong>Just</strong>
+          eggs, potatoes, olive oil, and an onion. One of Spain's most iconic dishes.
+        </div>
+      </div>
+      <div class="dish-card">
+        <span class="dish-flag">🇫🇷</span>
+        <div class="dish-name">Soupe au Pistou</div>
+        <div class="dish-country">France</div>
+        <div class="dish-ingredients">
+          <strong>Just</strong>
+          whatever vegetables were in the garden, with a handful of basil and garlic.
+        </div>
+      </div>
+      <div class="dish-card">
+        <span class="dish-flag">🇮🇪</span>
+        <div class="dish-name">Irish Stew</div>
+        <div class="dish-country">Ireland</div>
+        <div class="dish-ingredients">
+          <strong>Just</strong>
+          meat, potatoes, carrots, and an onion. Fed generations of Irish families.
+        </div>
+      </div>
+    </div>
+
+    <div class="philosophy-quote">
+      <blockquote>
+        "Your grandparents didn't have a jar of sauce or a TV chef.<br>
+        They had what they had — and they fed a family.<br>
+        <em>You have more than they did.</em>"
+      </blockquote>
+      <cite>The EezyPeezy philosophy 🫛</cite>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ THREE TIERS ══ -->
+<section class="tiers-section" id="tiers">
+  <div class="tiers-inner">
+    <div class="tiers-header">
+      <div class="tiers-eyebrow">The EezyPeezy system</div>
+      <h2 class="tiers-h2">Every snap returns<br>three possibilities</h2>
+      <p class="tiers-sub">We meet you wherever your kitchen is at — whether it's bare, decent, or ready to shine.</p>
+    </div>
+    <div class="tiers-grid">
+      <div class="tier-card tier-card-1">
+        <span class="tier-icon">🫛</span>
+        <div class="tier-name">Just This</div>
+        <div class="tier-tagline">Only what you snapped</div>
+        <div class="tier-desc">Uses only what you have plus the true basics — salt, pepper, oil. When you literally have nothing to spare, this tier still finds you a meal.</div>
+        <div class="tier-example">"Peas, an egg, leftover rice. That's egg fried rice. Done."</div>
+      </div>
+      <div class="tier-card tier-card-2">
+        <span class="tier-icon">🧂</span>
+        <div class="tier-name">A Little More</div>
+        <div class="tier-tagline">Plus what most people have</div>
+        <div class="tier-desc">Adds the staples that live in almost every kitchen — an onion, a tin of tomatoes, garlic, a stock cube, dried pasta. Things you probably have right now.</div>
+        <div class="tier-example">"With an onion and a tin of tomatoes, those peas become a proper soup."</div>
+      </div>
+      <div class="tier-card tier-card-3">
+        <span class="tier-icon">✨</span>
+        <div class="tier-name">Let's Go</div>
+        <div class="tier-tagline">One or two things worth grabbing</div>
+        <div class="tier-desc">Suggests 1–2 affordable items that genuinely elevate the meal. Not a shopping list — just the one thing that takes it from good to great.</div>
+        <div class="tier-example">"Grab a tin of coconut milk next time. It turns this into a proper curry."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="testimonials-section">
+  <div class="testimonials-inner">
+    <div class="testimonials-header">
+      <div class="section-eyebrow" style="justify-content:center;">Real people, real kitchens</div>
+      <h2 class="testimonials-h2">The 6pm moment, solved.</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <div class="testimonial-text">I had frozen peas, half an onion and some leftover rice. EezyPeezy gave me three actual options. I made the curry one. It was <strong>genuinely better than the takeout</strong> I nearly ordered.</div>
+        <div class="testimonial-person">
+          <div class="testimonial-avatar">👩</div>
+          <div>
+            <div class="testimonial-name">Sarah M.</div>
+            <div class="testimonial-role">Mum of two, Manchester</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <div class="testimonial-text">As a student, I was spending £40 a week on takeout because I <strong>"had nothing to cook."</strong> Turns out I had plenty. I just couldn't see it. This app changed that.</div>
+        <div class="testimonial-person">
+          <div class="testimonial-avatar">👨‍🎓</div>
+          <div>
+            <div class="testimonial-name">James K.</div>
+            <div class="testimonial-role">University student, Dublin</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"</div>
+        <div class="testimonial-text">The three tiers is the clever bit. I always go for the middle one — <strong>it uses what I have</strong> but makes it feel like a proper meal. Takes about 20 minutes. Perfect.</div>
+        <div class="testimonial-person">
+          <div class="testimonial-avatar">🧑</div>
+          <div>
+            <div class="testimonial-name">Priya T.</div>
+            <div class="testimonial-role">Working professional, London</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ══ -->
+<section class="final-cta" id="try">
+  <div class="final-cta-inner">
+    <div class="section-eyebrow" style="justify-content:center;">Ready?</div>
+    <h2 class="final-cta-h2">
+      You had more<br>than you<br><em>thought.</em>
+    </h2>
+    <p class="final-cta-sub">
+      The greatest food cultures in the world were built on a few simple things.
+      Yours starts tonight. <strong>One snap is all it takes.</strong>
+    </p>
+    <div class="final-cta-actions">
+      <a href="app/index.html" class="btn-primary-hero" style="font-size:1.1rem; padding:20px 40px;">
+        📸 Snap my items now — it's free
+      </a>
+      <div class="final-reassurance">
+        <span>No sign-up</span>
+        <span>No download</span>
+        <span>Works right now</span>
+        <span>Always free</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">
+      <div class="nav-logo-pod" style="width:28px;height:28px;font-size:14px;">🫛</div>
+      Eezy<span>Peezy</span>
+    </div>
+    <div class="footer-tagline">Snap what you've got. Eat well tonight.</div>
+  </div>
+  <div class="footer-links">
+    <a href="#how">How it works</a>
+    <a href="mailto:hello@eezypeezy.app">Contact</a>
+  </div>
+  <div class="footer-copy">
+    © EezyPeezy 2026 · <a href="https://eezypeezy.app" style="color:inherit;text-decoration:none;">eezypeezy.app</a><br>
+    Made with 🫛 in Ireland
+  </div>
+</footer>
+
+</body>
+</html>
